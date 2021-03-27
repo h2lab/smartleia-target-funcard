@@ -1,0 +1,19 @@
+name: smartleia-test-funcard
+
+# Run this workflow every time a new commit pushed to your repository
+on: push
+
+jobs:
+  vanilla_tests:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repository
+      - name: checkout repository
+        uses: actions/checkout@v2
+      # Run actions
+      # Compilation tests
+      - name: funcard compilation tests
+        shell: bash
+        run: |
+          sudo apt-get install gcc-avr;
+          cd src && make;
