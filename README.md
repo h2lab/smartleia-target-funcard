@@ -28,7 +28,7 @@ Two test scripts are provided here: `script-AES128-enc.py` and `pin_timing_attac
 
 The testing scripts are mainly Python based, and have been tested with Python3. The **dependency requirements** for these scripts are:
 
-  * The `smartleia` package in its version 1.0.1 at least, available [here](https://github.com/h2lab/smartleia).
+  * The `smartleia` package in its **version v1.0.1-1 at least** (this contains a small fix for funcards usage through PCSC relay), available [here](https://github.com/h2lab/smartleia).
   * The `pyscard`, `numpy` and `crypto` packages, all available with `pip`.
 
 Two test scripts are provided: `script-AES128-enc.py` and `pin_timing_attacks.py`. Each of these scripts can be used in two modes: using LEIA's
