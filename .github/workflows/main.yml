@@ -15,5 +15,5 @@ jobs:
       - name: funcard compilation tests
         shell: bash
         run: |
-          sudo apt-get install gcc-avr;
+          sudo apt-get install gcc-avr avr-libc gdb-avr;
           cd src && make;
