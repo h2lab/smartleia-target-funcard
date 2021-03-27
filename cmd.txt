@@ -1,0 +1,27 @@
+Applet commands
+================
+
+AES tests:
+----------
+# Set 1 vector 1
+    mode=aes-128
+    key=2b7e151628aed2a6abf7158809cf4f3c
+    iv=
+    plain=6bc1bee22e409f96e93d7e117393172a
+    cipher=3ad77bb40d7a3660a89ecaf32466ef97
+
+# Encryption
+opensc-tool -s 00A404000a45757477747536417080 -s 00110000102b7e151628aed2a6abf7158809cf4f3c -s 0015000000 -s 00120000106bc1bee22e409f96e93d7e117393172a -s 0016000000 -s 0014000000 -s 0013000000
+
+...
+Sending: 00 13 00 00 00 
+Received (SW1=0x90, SW2=0x00):
+3A D7 7B B4 0D 7A 36 60 A8 9E CA F3 24 66 EF 97 :.{..z6`....$f..
+
+# Decryption
+opensc-tool -s 00A404000a45757477747536417080 -s 00110000102b7e151628aed2a6abf7158809cf4f3c -s 0015000000 -s 001700000101 -s 00120000103ad77bb40d7a3660a89ecaf32466ef97 -s 0016000000 -s 0014000000 -s 0013000000
+
+...
+Sending: 00 13 00 00 00 
+Received (SW1=0x90, SW2=0x00):
+6B C1 BE E2 2E 40 9F 96 E9 3D 7E 11 73 93 17 2A k....@...=~.s..*
