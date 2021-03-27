@@ -8,7 +8,7 @@ The implementations have been tested on a
 
 # Compilation
 
-Go to the [src/](src/) folder and run ``make`` (you must have [avr-gcc](https://gcc.gnu.org/wiki/avr-gcc) installed on your PC). This will create ``aes-<DDMMYY>-<HHMMSS>.hex`` and ``eedata-<DDMMYY>-<HHMMSS>.hex`` in the [src/build/](src/build/) folder. 
+Go to the [src/](src/) folder and run ``make`` (you must have [avr-gcc](https://gcc.gnu.org/wiki/avr-gcc) and the avr-libc installed on your PC). This will create ``aes-<DDMMYY>-<HHMMSS>.hex`` and ``eedata-<DDMMYY>-<HHMMSS>.hex`` in the [src/build/](src/build/) folder. 
 
 
 # Loading in the ATMega8515 card
@@ -25,6 +25,14 @@ This will compile and push the firmware on the funcard inserted in your LEIA boa
 
 # Using the testing scripts
 
+## Testing scripts dependencies
+
+The testing scripts are mainly Python based, and have been tested with Python3. The requirements for these scripts are:
+
+  * The `smartleia` package in its version 1.0.1 at least, available [here](https://github.com/h2lab/smartleia).
+  * The `pyscard`, `numpy` and `crypto` packages, all available with `pip`.
+
+## Testing scripts usage
 Two test scripts are provided here: `script-AES128-enc.py` and `pin_timing_attacks.py`. Each of these scripts can be used in two modes: using LEIA's
 direct access through `/dev/ttyACMx` using the toggle `USE_LEIA=True` in the scripts, or using PCSC daemon either through a regular smart card reader
 (or LEIA in PCSC relay mode) by using the toggle `USE_LEIA=False` in the scripts.
@@ -38,6 +46,8 @@ of less than milliseconds, a proper time measurement for APDUs is necessary. Thi
 use here: a regular smart card reader is not able to extract the secret (at least with the basic approach used using LEIA). You
 can test LEIA's timing extraction with the `USE_LEIA=True`, and PCSC based (using a regular reader or LEIA in PCSC mode) using the
 `USE_LEIA=False` toggle in the script. The first one should extract the secret PIN successfully, while the second will not succeed.
+
+
 
 # Licenses
 
