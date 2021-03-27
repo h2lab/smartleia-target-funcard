@@ -23,18 +23,15 @@ sh flash_funcard.sh
 
 This will compile and push the firmware on the funcard inserted in your LEIA board.
 
+
 # Using the testing scripts
 
 Two test scripts are provided here: `script-AES128-enc.py` and `pin_timing_attacks.py`.
-
-## Testing scripts dependencies
 
 The testing scripts are mainly Python based, and have been tested with Python3. The requirements for these scripts are:
 
   * The `smartleia` package in its version 1.0.1 at least, available [here](https://github.com/h2lab/smartleia).
   * The `pyscard`, `numpy` and `crypto` packages, all available with `pip`.
-
-## Testing scripts usage
 
 Two test scripts are provided: `script-AES128-enc.py` and `pin_timing_attacks.py`. Each of these scripts can be used in two modes: using LEIA's
 direct access through `/dev/ttyACMx` using the toggle `USE_LEIA=True` in the scripts, or using PCSC daemon either through a regular smart card reader
@@ -44,7 +41,7 @@ The`script-AES128-enc.py` tests AES-128 encryption and decryption APDUs: this ca
 AES (NOTE: although some APDUs setting masks are present, these are not used and are here for future evolutions).
 
 The `pin_timing_attacks.py` extracts a secret PIN from the programmed funcard using a **timing attack** that exploits the dummy algorithm
-sued to check the PIN. In order for this attack to succeed, a timing oracle is needed. Since such a timing oracle exploits variations
+used to check the PIN. In order for this attack to succeed, a timing oracle is needed. Since such a timing oracle exploits variations
 of less than milliseconds, a proper time measurement for APDUs is necessary. This script shows that LEIA's timing feature can be of
 use here: a regular smart card reader is not able to extract the secret (at least with the basic approach used using LEIA). You
 can test LEIA's timing extraction with the `USE_LEIA=True`, and PCSC based (using a regular reader or LEIA in PCSC mode) using the
