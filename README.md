@@ -32,7 +32,6 @@ The testing scripts are mainly Python based, and have been tested with Python3. 
 
   * The `smartleia` package in its version 1.0.1 at least, available [here](https://github.com/h2lab/smartleia).
   * The `pyscard`, `numpy` and `crypto` packages, all available with `pip`.
-
 ## Using the scripts
 
 Two test scripts are provided: `script-AES128-enc.py` and `pin_timing_attacks.py`. Each of these scripts can be used in two modes: using LEIA's
