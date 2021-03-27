@@ -26,19 +26,16 @@ This will compile and push the firmware on the funcard inserted in your LEIA boa
 
 Two test scripts are provided here: `script-AES128-enc.py` and `pin_timing_attacks.py`.
 
-## Dependencies
-
-The testing scripts are mainly Python based, and have been tested with Python3. The requirements for these scripts are:
+The testing scripts are mainly Python based, and have been tested with Python3. The **dependency requirements** for these scripts are:
 
   * The `smartleia` package in its version 1.0.1 at least, available [here](https://github.com/h2lab/smartleia).
   * The `pyscard`, `numpy` and `crypto` packages, all available with `pip`.
-## Using the scripts
 
 Two test scripts are provided: `script-AES128-enc.py` and `pin_timing_attacks.py`. Each of these scripts can be used in two modes: using LEIA's
-direct access through `/dev/ttyACMx` using the toggle `USE_LEIA=True` in the scripts, or using PCSC daemon either through a regular smart card reader
+direct access through `/dev/ttyACMx` with the toggle `USE_LEIA=True` in the scripts, or using PCSC daemon either through a regular smart card reader
 (or LEIA in PCSC relay mode) by using the toggle `USE_LEIA=False` in the scripts.
 
-The`script-AES128-enc.py` tests AES-128 encryption and decryption APDUs: this can be a basis to mount some side-channel attacks on the unprotected
+The`script-AES128-enc.py` tests AES-128 encryption and decryption APDUs: this can be a basis to mount some side-channel attacks on an unprotected
 AES (NOTE: although some APDUs setting masks are present, these are not used and are here for future evolutions).
 
 The `pin_timing_attacks.py` extracts a secret PIN from the programmed funcard using a **timing attack** that exploits the dummy algorithm
@@ -52,6 +49,7 @@ can test LEIA's timing extraction with the `USE_LEIA=True`, and PCSC based (usin
 
 # Licenses
 
-SOSSE source codes are released under GPL v2 License. Our specific source codes for aes are released under the BSD License. See the LICENSE file in each source folder for more information. 
+SOSSE source codes are released under GPL v2 License. AVR-Crypto-Lib source code is released under GPL v3 License.
+Our specific source codes for aes are released under the BSD License. See the LICENSE file in each source folder for more information. 
 
 
