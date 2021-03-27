@@ -20,11 +20,9 @@ If you have a **recent LEIA board with the flashing mode feature**, you can simp
 ```
 sh flash_funcard.sh
 ```
-
 This will compile and push the firmware on the funcard inserted in your LEIA board.
 
-
-# Using the testing scripts
+# Using the testing scripts
 
 Two test scripts are provided here: `script-AES128-enc.py` and `pin_timing_attacks.py`.
 
