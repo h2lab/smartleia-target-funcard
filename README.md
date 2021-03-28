@@ -40,8 +40,8 @@ AES (NOTE: although some APDUs setting masks are present, these are not used and
 
 The `pin_timing_attacks.py` extracts a secret PIN from the programmed funcard using a **timing attack** that exploits the dummy algorithm
 used to check the PIN. In order for this attack to succeed, a timing oracle is needed. Since such a timing oracle exploits variations
-of less than milliseconds, a proper time measurement for APDUs is necessary. This script shows that LEIA's timing feature can be of
-use here: a regular smart card reader is not able to extract the secret (at least with the basic approach used using LEIA). You
+of less than milliseconds, a proper time measurement for APDUs is necessary. This script shows that LEIA's [timing feature](https://h2lab.github.io/smartleia.github.io/c/test.html#timers)
+can be of use here: a regular smart card reader is not able to extract the secret (at least with the basic approach used using LEIA). You
 can test LEIA's timing extraction with the `USE_LEIA=True`, and PCSC based (using a regular reader or LEIA in PCSC mode) using the
 `USE_LEIA=False` toggle in the script. The first one should extract the secret PIN successfully, while the second will not succeed.
 
