@@ -8,7 +8,9 @@ The implementations have been tested on a
 
 # Compilation
 
-Go to the [src/](src/) folder and run ``make`` (you must have [avr-gcc](https://gcc.gnu.org/wiki/avr-gcc) and the avr-libc installed on your PC). This will create ``aes-<DDMMYY>-<HHMMSS>.hex`` and ``eedata-<DDMMYY>-<HHMMSS>.hex`` in the [src/build/](src/build/) folder. 
+Go to the [src/](src/) folder and run ``make``. You must have `avr-gcc`, e.g. from [avr-gcc](https://gcc.gnu.org/wiki/avr-gcc), and the `avr-libc` installed on your PC: these are usually
+packaged with popular distros such as Debian or Ubuntu.
+Make should create ``aes-<DDMMYY>-<HHMMSS>.hex`` and ``eedata-<DDMMYY>-<HHMMSS>.hex`` in the [src/build/](src/build/) folder. 
 
 
 # Loading in the ATMega8515 card
