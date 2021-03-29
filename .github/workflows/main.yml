@@ -16,4 +16,4 @@ jobs:
         shell: bash
         run: |
           sudo apt-get install gcc-avr avr-libc gdb-avr;
-          cd src && make;
+          cd src && make && cd -;

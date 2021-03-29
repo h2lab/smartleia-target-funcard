@@ -1,11 +1,17 @@
 import smartleia as sl
 import numpy as np
-import sys, signal
+import sys, signal, os
 import binascii
 import datetime, time
 
-USE_LEIA = True
-#USE_LEIA = False
+USE_LEIA = os.getenv("USE_LEIA")
+if USE_LEIA == "False":
+        print("[+] Using PCSC reader")
+        USE_LEIA = False
+else:
+        print("[+] Using LEIA raw access")
+        USE_LEIA = True
+
 
 # Handle Python 2/3 issues
 def is_python_2():

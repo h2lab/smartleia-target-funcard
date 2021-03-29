@@ -17,13 +17,18 @@ from smartcard.ATR import ATR
 from smartcard.util import BinStringToHexList, HexListToBinString, toHexString, toBytes
 from Crypto.Cipher import AES
 from random import randint
-import sys
+import sys, os
 import binascii
 
 import smartleia as sl
 
-USE_LEIA = True
-#USE_LEIA = False
+USE_LEIA = os.getenv("USE_LEIA")
+if USE_LEIA == "False":
+	print("[+] Using PCSC reader")
+	USE_LEIA = False
+else:
+	print("[+] Using LEIA raw access")
+	USE_LEIA = True
 
 ####################################################################################################
 ####################################################################################################
