@@ -44,7 +44,7 @@ $ USE_LEIA=False python3 pin_timing_attacks.py
 $ USE_LEIA=True python3 pin_timing_attacks.py 
 [+] Using LEIA raw access
 ...
-``
+```
 
 
 The`script-AES128-enc.py` tests AES-128 encryption and decryption APDUs: this can be a basis to mount some side-channel attacks on an unprotected
