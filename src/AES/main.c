@@ -30,6 +30,7 @@
 #include <t0.h>
 #include <trig.h>
 
+unsigned char trig_activated = 0;
 unsigned char trig_level = 0;
 void trig_inv(void)
 {
@@ -127,13 +128,15 @@ int main( void )
 				break;
 			case INS_AES128_GO:
 #ifdef WITH_AES_TRIG
-				//trig_high();
-				trig_inv();
+				if(trig_activated >= 1){
+					trig_inv();
+				}
 #endif /* WITH_AES_TRIG */
 				cmd_aes128_go();
 #ifdef WITH_AES_TRIG
-				trig_inv();
-				//trig_low();
+				if(trig_activated >= 1){
+					trig_inv();
+				}
 #endif /* WITH_AES_TRIG */
 				break;
 			case INS_GET_OUTPUT:
@@ -142,6 +145,12 @@ int main( void )
 			case INS_CHECK_PIN:
 				cmd_check_pin();
 				break;
+#ifdef WITH_AES_TRIG
+			case INS_CONF_TRIG:
+				/* Activate or desactivate the trig */
+				cmd_conf_trig();
+				break;
+#endif
 			default:
 				sw_set( SW_WRONG_INS );
 			}

@@ -55,7 +55,11 @@
 
 #define INS_SELECT			0xA4	//!< INS byte: select applet
 
-#define INS_CHECK_PIN			0x1b	//!< INS byte: select applet
+#define INS_CHECK_PIN			0x1b	//!< INS byte: check pin
+
+#ifdef WITH_AES_TRIG
+#define INS_CONF_TRIG			0x20    //!<INS byte: configure trigger
+#endif
 
 /*! \brief Valid data in response array. Invalid if zero. */
 extern iu8 resplen;
