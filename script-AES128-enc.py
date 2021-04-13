@@ -60,6 +60,61 @@ l_APDUSOSSEAESEnc = [0x00, 0x14]
 ### APDU command to set DIR
 l_APDUSOSSEAESSetDir = [0x00, 0x17]
 
+### APDU command to set internal trigger
+# 0x00 = no trigger, 0x01 = trig high on AES
+# 0x02 = toggle trig every AES round
+l_APDUSOSSEAESSetTrigMode = [0x00, 0x20]
+l_APDUSOSSEAESGetTrigMode = [0x00, 0x21]
+
+
+def set_trig_mode(trig_mode=0x00):
+	print("Set Trig mode")
+	# build complete Read APDU
+	l_APDUSOSSEAESSetTrigMode_complete = []
+	l_APDUSOSSEAESSetTrigMode_complete += l_APDUSOSSEAESSetTrigMode
+	# unused P1
+	l_APDUSOSSEAESSetTrigMode_complete.append(0)
+	# unused P2
+	l_APDUSOSSEAESSetTrigMode_complete.append(0)
+	# Trig mode length
+	l_APDUSOSSEAESSetTrigMode_complete.append(0x01)
+	# Trig mode value
+	l_APDUSOSSEAESSetTrigMode_complete.append(trig_mode)
+	
+	print("send APDU: %s" % toHexString(l_APDUSOSSEAESSetTrigMode_complete))
+	if USE_LEIA == True:
+		r = reader.send_APDU(sl.create_APDU_from_bytes(l_APDUSOSSEAESSetTrigMode_complete))
+		response = r.data
+		sw1 = r.sw1
+		sw2 = r.sw2
+	else:
+		response,sw1,sw2 = o_deviceConnection.transmit(l_APDUSOSSEAESSetTrigMode_complete)
+	print("data: %s" % toHexString(response))
+	print("sw  : %s" % toHexString([sw1]) + toHexString([sw2]))
+
+def get_trig_mode():
+	print("Get Trig mode")
+	# build complete Read APDU
+	l_APDUSOSSEAESGetTrigMode_complete = []
+	l_APDUSOSSEAESGetTrigMode_complete += l_APDUSOSSEAESGetTrigMode
+	# unused P1
+	l_APDUSOSSEAESGetTrigMode_complete.append(0)
+	# unused P2
+	l_APDUSOSSEAESGetTrigMode_complete.append(0)
+	# Trig mode length
+	l_APDUSOSSEAESGetTrigMode_complete.append(0x01)
+	
+	print("send APDU: %s" % toHexString(l_APDUSOSSEAESGetTrigMode_complete))
+	if USE_LEIA == True:
+		r = reader.send_APDU(sl.create_APDU_from_bytes(l_APDUSOSSEAESGetTrigMode_complete))
+		response = r.data
+		sw1 = r.sw1
+		sw2 = r.sw2
+	else:
+		response,sw1,sw2 = o_deviceConnection.transmit(l_APDUSOSSEAESGetTrigMode_complete)
+	print("data: %s" % toHexString(response))
+	print("sw  : %s" % toHexString([sw1]) + toHexString([sw2]))
+	return response
 
 def run_aes(l_secretKey,l_input,l_mask, direction=0):
 
@@ -417,8 +472,15 @@ for i in range(16):
 l_mask[16] = randint(0,255)
 l_mask[17] = randint(0,255)
 
+# Optional: set the internal trig mode (0x01 or 0x02, 0x00 to disable)
+# WARNING: this internal trig can of course perturb LEIA's own triggers
+# set through the trigger strategy, so be careful when dealing with it.
+#set_trig_mode(0x02)
+#get_trig_mode()
 # run the aes
+# Encrypt
 run_aes(l_secretKey,l_input,l_mask,0)
+# Decrypt
 run_aes(l_secretKey,l_input,l_mask,1)
 
 if USE_LEIA == False:

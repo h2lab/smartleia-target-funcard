@@ -92,6 +92,12 @@ By default, the internal trigger is not active. You can specifically activate it
 first trigger mode (trig C4 high when AES begins, low after). `XX=0x02` will activate the second trigger mode
 (toggle C4 at each AES round). `XX=0x00` will deactivate the trigger.
 
+You can get the actual value of the trigger mode with the `00 21 00 00 01` APDU, getting one byte from the card
+representing the current mode.
+
+**WARNING:** using the internal trigger can of course perturb LEIA's own triggers set through the dedicated
+trigger strategies. So use this internal trigger **with care** and if you know what you are doing!
+
 # Licenses
 
 SOSSE source codes are released under GPL v2 License. AVR-Crypto-Lib source code is released under GPL v3 License.

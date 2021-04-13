@@ -58,7 +58,8 @@
 #define INS_CHECK_PIN			0x1b	//!< INS byte: check pin
 
 #ifdef WITH_AES_TRIG
-#define INS_CONF_TRIG			0x20    //!<INS byte: configure trigger
+#define INS_CONF_TRIG			0x20    //!<INS byte: configure trigger mode
+#define INS_GET_TRIG			0x21    //!<INS byte: get trigger mode
 #endif
 
 /*! \brief Valid data in response array. Invalid if zero. */
@@ -118,6 +119,7 @@ void cmd_getResponse( void );
 
 #ifdef WITH_AES_TRIG
 void cmd_conf_trig(void);
+void cmd_get_trig(void);
 #endif
 
 #endif /* SOSSE_COMMANDS_H */

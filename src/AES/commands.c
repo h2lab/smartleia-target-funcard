@@ -492,4 +492,24 @@ void cmd_conf_trig(void)
 	/* SW */
 	sw_set( SW_OK );	
 }
+
+void cmd_get_trig(void)
+{
+	iu16 length=header[4];
+	
+	if(length!=1){ 
+		sw_set( SW_WRONG_LEN );
+		return;
+	}
+
+	/* ACK */
+	t0_sendAck();
+
+	/* Data */
+	hal_io_sendByteT0( trig_activated );
+
+	/* SW */
+	sw_set( SW_OK );
+}
+
 #endif

@@ -150,6 +150,10 @@ int main( void )
 				/* Activate or desactivate the trig */
 				cmd_conf_trig();
 				break;
+			case INS_GET_TRIG:
+				/* Get the current trig */
+				cmd_get_trig();
+				break;
 #endif
 			default:
 				sw_set( SW_WRONG_INS );
