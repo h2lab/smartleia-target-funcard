@@ -25,9 +25,11 @@
  * 
  */
 
-/* Trigger */
-extern unsigned char trig_activated;
-extern void trig_inv(void);
+/* Triggers */
+extern unsigned char trig_activated_c4;
+extern void trig_inv_c4(void);
+extern unsigned char trig_activated_c8;
+extern void trig_inv_c8(void);
 
 #include <stdint.h>
 #include <string.h>
@@ -118,16 +120,23 @@ void aes_encrypt_core(aes_cipher_state_t* state, const aes_genctx_t* ks, uint8_t
 	i=1;
 	for(;rounds>1;--rounds){
 #ifdef WITH_AES_TRIG
-		if(trig_activated >= 2){
-			trig_inv();
+		if(trig_activated_c4 >= 2){
+			trig_inv_c4();
 		}
+		if(trig_activated_c8 >= 2){
+			trig_inv_c8();
+		}
+
 #endif
 		aes_enc_round(state, &(ks->key[i]));
 		++i;
 	}
 #ifdef WITH_AES_TRIG
-	if(trig_activated >= 2){
-		trig_inv();
+	if(trig_activated_c4 >= 2){
+		trig_inv_c4();
+	}
+	if(trig_activated_c8 >= 2){
+		trig_inv_c8();
 	}
 #endif
 	aes_enc_lastround(state, &(ks->key[i]));

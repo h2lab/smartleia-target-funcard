@@ -58,17 +58,19 @@ can test LEIA's timing extraction with the `USE_LEIA=True`, and PCSC based (usin
 `USE_LEIA=False` toggle. The first one should extract the secret PIN successfully, while the second will not succeed.
 
 
-# Handling the ATMega8515 internal trigger
+# Handling the ATMega8515 internal triggers
 
-For additional measurement precision, a dedicated trigger has been implemented in the ATMega8515 firmware
-on the ISO7816-2 pin C4 (see the figure below).
+For additional measurement precision, two dedicated triggers have been implemented in the ATMega8515 firmware
+on the ISO7816-2 pins C4 and C8 (see the figure below). Beware that the C8 pin is shared with LEIA's onboard own
+trigger.
 
-This pin is unused by the ISO7816-3 layer, and since it is connected to an internal
-pin of the ATMega8515, we can use it without perturbing the APDU communication with a reader.
+These two pins are unused by the ISO7816-3 layer, and since they are connected to internal
+pins of the ATMega8515 (PB5 and PB7), we can use them without perturbing the APDU communication with a reader (either
+LEIA or any reader).
 
-Two modes are proposed. In the first mode, the pin C4 is set high before executing the AES, and set low after its execution.
-In the second mode, the pin C4 is toggled at each AES round in order to isolate on the scope each round for a better
-focus on the points of interest. You can play around with the ``trig_high()``, ``trig_low()`` and ``trig_inv()`` functions
+Two modes are proposed. In the first mode, the pins C4 and C8 are set high just before executing the AES, and set low after its execution.
+In the second mode, the pins C4 and C8 are toggled at each AES round in order to isolate on the scope each round for a better
+focus on the points of interest. You can play around with the ``trig_high_c4/8()``, ``trig_low_c4/8()`` and ``trig_inv_c4/8()`` functions
 calls inside the AES (it is safe to call them from C and assembly).
 
 ```
@@ -82,20 +84,21 @@ calls inside the AES (it is safe to call them from C and assembly).
      |   C3   |         |    C7  | 
      |        +----+----+        | 
      +-------/     |     \-------+ 
-     |   C4=TRIG   |         C8  | 
+     |   C4=TRIG1  |    C8=TRIG2 | 
      |             |             | 
       -------------+------------- 
 ```
 
-By default, the internal trigger is not active. You can specifically activate it using the `00 20 00 00 01 XX` APDU
-(class `0x00` and instruction `0x20`, with P1 and P2 set to `0x00` and one byte data). `XX=0x01` will activate the
-first trigger mode (trig C4 high when AES begins, low after). `XX=0x02` will activate the second trigger mode
-(toggle C4 at each AES round). `XX=0x00` will deactivate the trigger.
+By default, the internal triggers are not active. You can specifically activate each one of them using the `00 20 00 00 02 XX YY` APDU
+(class `0x00` and instruction `0x20`, with P1 and P2 set to `0x00` and two bytes data). `XX=0x01` will activate the
+first trigger mode on C4 (trig C4 high when AES begins, low after). `XX=0x02` will activate the second trigger mode on C4
+(toggle C4 at each AES round). `XX=0x00` will deactivate the trigger on C4. The same logic holds independently for the second
+pin C8 using the valye `YY`.
 
-You can get the actual value of the trigger mode with the `00 21 00 00 01` APDU, getting one byte from the card
-representing the current mode.
+You can get the actual current values of the triggers modes with the `00 21 00 00 02` APDU, getting two bytes from the card
+representing the current mode on C4 and C8 respectively.
 
-**WARNING:** using the internal trigger can of course perturb LEIA's own triggers set through the dedicated
+**WARNING:** using the internal trigger **C8** can perturb LEIA's own trigger set through the dedicated
 trigger strategies. So use this internal trigger **with care** and if you know what you are doing!
 
 # Licenses

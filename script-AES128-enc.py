@@ -67,7 +67,7 @@ l_APDUSOSSEAESSetTrigMode = [0x00, 0x20]
 l_APDUSOSSEAESGetTrigMode = [0x00, 0x21]
 
 
-def set_trig_mode(trig_mode=0x00):
+def set_trig_mode(trig_mode_c4=0x00, trig_mode_c8=0x00):
 	print("Set Trig mode")
 	# build complete Read APDU
 	l_APDUSOSSEAESSetTrigMode_complete = []
@@ -77,9 +77,10 @@ def set_trig_mode(trig_mode=0x00):
 	# unused P2
 	l_APDUSOSSEAESSetTrigMode_complete.append(0)
 	# Trig mode length
-	l_APDUSOSSEAESSetTrigMode_complete.append(0x01)
-	# Trig mode value
-	l_APDUSOSSEAESSetTrigMode_complete.append(trig_mode)
+	l_APDUSOSSEAESSetTrigMode_complete.append(0x02)
+	# Trig mode values (for C4 and C8 pins)
+	l_APDUSOSSEAESSetTrigMode_complete.append(trig_mode_c4)
+	l_APDUSOSSEAESSetTrigMode_complete.append(trig_mode_c8)
 	
 	print("send APDU: %s" % toHexString(l_APDUSOSSEAESSetTrigMode_complete))
 	if USE_LEIA == True:
@@ -102,7 +103,7 @@ def get_trig_mode():
 	# unused P2
 	l_APDUSOSSEAESGetTrigMode_complete.append(0)
 	# Trig mode length
-	l_APDUSOSSEAESGetTrigMode_complete.append(0x01)
+	l_APDUSOSSEAESGetTrigMode_complete.append(0x02)
 	
 	print("send APDU: %s" % toHexString(l_APDUSOSSEAESGetTrigMode_complete))
 	if USE_LEIA == True:
@@ -475,7 +476,7 @@ l_mask[17] = randint(0,255)
 # Optional: set the internal trig mode (0x01 or 0x02, 0x00 to disable)
 # WARNING: this internal trig can of course perturb LEIA's own triggers
 # set through the trigger strategy, so be careful when dealing with it.
-#set_trig_mode(0x02)
+#set_trig_mode(0x02, 0x02)
 #get_trig_mode()
 # run the aes
 # Encrypt

@@ -473,12 +473,13 @@ void cmd_check_pin ( void )
 }
 
 #ifdef WITH_AES_TRIG
-extern unsigned char trig_activated;
+extern unsigned char trig_activated_c4;
+extern unsigned char trig_activated_c8;
 void cmd_conf_trig(void)
 {
 	iu16 length=header[4];
 	
-	if(length!=1){ 
+	if(length!=2){ 
 		sw_set( SW_WRONG_LEN );
 		return;
 	}
@@ -487,7 +488,8 @@ void cmd_conf_trig(void)
 	t0_sendAck();
 
 	/* Set trigger to value */
-	trig_activated = hal_io_recByteT0();
+	trig_activated_c4 = hal_io_recByteT0();
+	trig_activated_c8 = hal_io_recByteT0();
 
 	/* SW */
 	sw_set( SW_OK );	
@@ -497,7 +499,7 @@ void cmd_get_trig(void)
 {
 	iu16 length=header[4];
 	
-	if(length!=1){ 
+	if(length!=2){ 
 		sw_set( SW_WRONG_LEN );
 		return;
 	}
@@ -506,7 +508,8 @@ void cmd_get_trig(void)
 	t0_sendAck();
 
 	/* Data */
-	hal_io_sendByteT0( trig_activated );
+	hal_io_sendByteT0( trig_activated_c4 );
+	hal_io_sendByteT0( trig_activated_c8 );
 
 	/* SW */
 	sw_set( SW_OK );

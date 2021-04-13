@@ -25,6 +25,12 @@
 #include "aes_dec.h"
 #include <avr/pgmspace.h>
 
+/* Triggers */
+extern unsigned char trig_activated_c4;
+extern void trig_inv_c4(void);
+extern unsigned char trig_activated_c8;
+extern void trig_inv_c8(void);
+
 void aes_invshiftrow(void* data, uint8_t shift){
 	uint8_t tmp[4];
 	tmp[0] = ((uint8_t*)data)[(4+0-shift)&3];
@@ -120,8 +126,25 @@ void aes_dec_firstround(aes_cipher_state_t* state, const aes_roundkey_t* k){
 
 void aes_decrypt_core(aes_cipher_state_t* state, const aes_genctx_t* ks, uint8_t rounds){
 	uint8_t i;
+#ifdef WITH_AES_TRIG
+        if(trig_activated_c8 >= 2){
+                trig_inv_c8();
+        }
+        if(trig_activated_c4 >= 2){
+                trig_inv_c4();
+        }
+#endif
 	aes_dec_firstround(state, &(ks->key[i=rounds]));
 	for(;rounds>1;--rounds){
+#ifdef WITH_AES_TRIG
+                if(trig_activated_c4 >= 2){
+                        trig_inv_c4();
+                }
+                if(trig_activated_c8 >= 2){
+                        trig_inv_c8();
+                }
+
+#endif
 		--i;
 		aes_dec_round(state, &(ks->key[i]));
 	}

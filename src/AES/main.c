@@ -30,19 +30,34 @@
 #include <t0.h>
 #include <trig.h>
 
-unsigned char trig_activated = 0;
-unsigned char trig_level = 0;
-void trig_inv(void)
+unsigned char trig_activated_c4 = 0;
+unsigned char trig_level_c4 = 0;
+void trig_inv_c4(void)
 {
-	if(trig_level == 0){
-		trig_high();
-		trig_level = 1;
+	if(trig_level_c4 == 0){
+		trig_high_c4();
+		trig_level_c4 = 1;
 	}
 	else{
-		trig_low();
-		trig_level = 0;
+		trig_low_c4();
+		trig_level_c4 = 0;
 	}
 }
+
+unsigned char trig_activated_c8 = 0;
+unsigned char trig_level_c8 = 0;
+void trig_inv_c8(void)
+{
+	if(trig_level_c8 == 0){
+		trig_high_c8();
+		trig_level_c8 = 1;
+	}
+	else{
+		trig_low_c8();
+		trig_level_c8 = 0;
+	}
+}
+
 
 /*! \brief Main function containing command interpreter loop.
 
@@ -62,7 +77,8 @@ int main( void )
 	hal_io_sendByteT0( 0x3B );
 
 	/* Low trig level by default */
-	trig_low();
+	trig_low_c4();
+	trig_low_c8();
 
 #if CONF_WITH_LOGGING==1
 	log_init();
@@ -128,14 +144,20 @@ int main( void )
 				break;
 			case INS_AES128_GO:
 #ifdef WITH_AES_TRIG
-				if(trig_activated >= 1){
-					trig_inv();
+				if(trig_activated_c4 >= 1){
+					trig_high_c4();
+				}
+				if(trig_activated_c8 >= 1){
+					trig_high_c8();
 				}
 #endif /* WITH_AES_TRIG */
 				cmd_aes128_go();
 #ifdef WITH_AES_TRIG
-				if(trig_activated >= 1){
-					trig_inv();
+				if(trig_activated_c4 >= 1){
+					trig_low_c4();
+				}
+				if(trig_activated_c8 >= 1){
+					trig_low_c8();
 				}
 #endif /* WITH_AES_TRIG */
 				break;
@@ -147,11 +169,11 @@ int main( void )
 				break;
 #ifdef WITH_AES_TRIG
 			case INS_CONF_TRIG:
-				/* Activate or desactivate the trig */
+				/* Activate or desactivate the internal triggers */
 				cmd_conf_trig();
 				break;
 			case INS_GET_TRIG:
-				/* Get the current trig */
+				/* Get the current internal triggers state */
 				cmd_get_trig();
 				break;
 #endif
