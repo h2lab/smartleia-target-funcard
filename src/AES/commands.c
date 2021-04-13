@@ -445,7 +445,6 @@ static iu8 PIN_to_check[32] = { 0 };
 void cmd_check_pin ( void )
 {
 	iu16 i, j, length=header[4];
-	iu8 b;
 	
 	/* Check PIN size */
 	if(length != sizeof(PIN)){ 

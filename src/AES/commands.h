@@ -116,4 +116,8 @@ void cmd_check_pin( void );
 */
 void cmd_getResponse( void );
 
+#ifdef WITH_AES_TRIG
+void cmd_conf_trig(void);
+#endif
+
 #endif /* SOSSE_COMMANDS_H */
