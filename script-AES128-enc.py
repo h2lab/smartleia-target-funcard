@@ -380,7 +380,10 @@ def run_aes(l_secretKey,l_input,l_mask, direction=0):
 	keyBinaryString = HexListToBinString(l_secretKey)
 	
 	# define size of key
-	AES.key_size = lengthKey
+	if sys.version_info.major == 3
+		AES.key_size = (lengthKey,)
+	else:
+		AES.key_size = lengthKey
 	
 	# create an AES engine in ECB mode
 	o_cryptoEngine = AES.new(bytes(l_secretKey), AES.MODE_ECB)
